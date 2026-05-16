@@ -19,6 +19,14 @@
         <h1>My Bills</h1>
         <h2>View, pay or dispute your utility bills</h2>
 
+        <!-- Payment result message -->
+        <div class="alert alert-success" th:if="${messageType == 'success'}">
+            <span th:text="${message}"></span>
+        </div>
+        <div class="alert alert-error" th:if="${messageType == 'error'}">
+            <span th:text="${message}"></span>
+        </div>
+
         <table>
             <thead>
             <tr>
