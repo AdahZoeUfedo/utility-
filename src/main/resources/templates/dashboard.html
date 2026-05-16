@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard - Utility International</title>
+</head>
+<body>
+<h1>Utility International</h1>
+<h2>Welcome to your Dashboard</h2>
+
+<nav>
+    <a th:href="@{/bills/customer/__${customer.id}__}">My Bills</a> |
+    <a th:href="@{/tariffs}">View Tariffs</a> |
+    <a th:href="@{/logout}">Logout</a>
+</nav>
+
+<p>Manage your bills, payments, and tariffs from here.</p>
+</body>
+</html>

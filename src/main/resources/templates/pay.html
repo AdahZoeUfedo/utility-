@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pay Bill - Utility International</title>
+</head>
+<body>
+<h1>Pay Bill</h1>
+
+<p>Bill Amount: <strong th:text="${bill.amount}"></strong></p>
+<p>Due Date: <strong th:text="${bill.dueDate}"></strong></p>
+
+<form th:action="@{/bills/pay/__${bill.id}__}" method="post">
+    <div>
+        <label>Card Number:</label>
+        <input type="text" name="cardNumber" placeholder="1234 5678 9012 3456" required/>
+    </div>
+    <div>
+        <label>Expiry Date:</label>
+        <input type="text" name="expiryDate" placeholder="MM/YY" required/>
+    </div>
+    <div>
+        <label>CVV:</label>
+        <input type="text" name="cvv" placeholder="123" required/>
+    </div>
+    <button type="submit">Confirm Payment</button>
+</form>
+
+<a th:href="@{/dashboard}">Cancel</a>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dispute Bill - Utility International</title>
+</head>
+<body>
+<h1>Dispute Bill</h1>
+
+<p>Please provide your reason for disputing this bill:</p>
+
+<form th:action="@{/disputes/submit/__${billId}__}" method="post">
+    <div>
+        <label>Reason:</label>
+        <textarea name="reason" rows="5" cols="40" placeholder="Explain why you are disputing this bill..." required></textarea>
+    </div>
+    <button type="submit">Submit Dispute</button>
+</form>
+
+<a th:href="@{/dashboard}">Cancel</a>
+</body>
+</html>

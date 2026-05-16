@@ -1,4 +1,5 @@
 package com.utility.utility.controller;
+import java.security.Principal;
 
 import com.utility.utility.model.Customer;
 import com.utility.utility.service.CustomerService;
@@ -28,5 +29,14 @@ public class CustomerController {
     @GetMapping("/login")
     public String showLoginPage() {
         return "login";
+    }
+
+    @GetMapping("/dashboard")
+    public String showDashboard(Model model, Principal principal) {
+        String email = principal.getName();
+        customerService.findByEmail(email).ifPresent(customer ->
+                model.addAttribute("customer", customer)
+        );
+        return "dashboard";
     }
 }

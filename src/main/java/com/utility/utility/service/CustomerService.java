@@ -3,6 +3,7 @@ package com.utility.utility.service;
 import com.utility.utility.model.Customer;
 import com.utility.utility.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
@@ -12,7 +13,11 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public Customer save(Customer customer) {
+        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
         return customerRepository.save(customer);
     }
 

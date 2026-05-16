@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tariffs - Utility International</title>
+</head>
+<body>
+<h1>Available Tariffs</h1>
+
+<a th:href="@{/dashboard}">Back to Dashboard</a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Tariff Name</th>
+        <th>Rate Per Unit</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="tariff : ${tariffs}">
+        <td th:text="${tariff.name}"></td>
+        <td th:text="${tariff.ratePerUnit}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register - Utility International</title>
+</head>
+<body>
+<h1>Utility International</h1>
+<h2>Create an Account</h2>
+
+<form th:action="@{/register}" th:object="${customer}" method="post">
+    <div>
+        <label>Full Name:</label>
+        <input type="text" th:field="*{name}" placeholder="Enter your full name" required/>
+    </div>
+    <div>
+        <label>Email:</label>
+        <input type="email" th:field="*{email}" placeholder="Enter your email" required/>
+    </div>
+    <div>
+        <label>Password:</label>
+        <input type="password" th:field="*{password}" placeholder="Create a password" required/>
+    </div>
+    <button type="submit">Register</button>
+</form>
+
+<p>Already have an account? <a th:href="@{/login}">Login here</a></p>
+</body>
+</html>
