@@ -2,20 +2,32 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dispute Bill - Utility International</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
-<h1>Dispute Bill</h1>
+<div class="navbar">
+    <a class="logo" th:href="@{/dashboard}">Utility International</a>
+    <nav>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
 
-<p>Please provide your reason for disputing this bill:</p>
+<div class="container">
+    <div class="card">
+        <h1>Dispute Bill</h1>
+        <h2>Please provide your reason for disputing this bill</h2>
 
-<form th:action="@{/disputes/submit/__${billId}__}" method="post">
-    <div>
-        <label>Reason:</label>
-        <textarea name="reason" rows="5" cols="40" placeholder="Explain why you are disputing this bill..." required></textarea>
+        <form th:action="@{/disputes/submit/__${billId}__}" method="post">
+            <div class="form-group">
+                <label>Reason:</label>
+                <textarea name="reason" rows="6" placeholder="Explain why you are disputing this bill..." required></textarea>
+            </div>
+            <button type="submit" class="btn">Submit Dispute</button>
+            <a th:href="@{/dashboard}" class="btn btn-secondary">Cancel</a>
+        </form>
     </div>
-    <button type="submit">Submit Dispute</button>
-</form>
-
-<a th:href="@{/dashboard}">Cancel</a>
+</div>
+<div class="footer">© 2026 Utility International. All rights reserved.</div>
 </body>
 </html>
