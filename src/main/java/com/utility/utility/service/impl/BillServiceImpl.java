@@ -81,6 +81,7 @@ public class BillServiceImpl implements BillService {
 
         auditLog.setAction("BILL_PAYMENT");
 
+        System.out.println("UTILITY ACCOUNT: " + bill.getUtilityAccount());
         auditLog.setPerformedBy(
                 bill.getUtilityAccount()
                         .getCustomer()

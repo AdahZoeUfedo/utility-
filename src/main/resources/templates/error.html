@@ -1,23 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Error</title>
+    <title>Error - Utility International</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 
+<div class="navbar">
+    <a class="logo" th:href="@{/dashboard}">Utility International</a>
+
+    <nav>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/tariffs}">View Tariffs</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
+
 <div class="container">
-    <div class="card">
 
-        <h1>Something Went Wrong</h1>
+    <div class="card" style="text-align:center; max-width:700px; margin:auto;">
 
-        <p th:text="${errorMessage}"></p>
+        <div style="
+            width:100px;
+            height:100px;
+            margin:0 auto 20px auto;
+            border-radius:50%;
+            background:#f4e9ff;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:48px;
+            color:#6F4685;
+        ">
+            ⚠
+        </div>
 
-        <a th:href="@{/dashboard}"
-           class="btn">
-            Return to Dashboard
-        </a>
+        <h1 style="color:#6F4685;">Something Went Wrong</h1>
+
+        <h2 style="margin-bottom:25px;">
+            An unexpected error occurred while processing your request.
+        </h2>
+
+        <div class="alert alert-error" style="margin-bottom:25px;">
+            <span th:text="${errorMessage}"></span>
+        </div>
+
+        <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
+
+            <a th:href="@{/dashboard}" class="btn">
+                Return to Dashboard
+            </a>
+
+        </div>
 
     </div>
+
+</div>
+
+<div class="footer">
+    © 2026 Utility International. All rights reserved.
 </div>
 
 </body>
