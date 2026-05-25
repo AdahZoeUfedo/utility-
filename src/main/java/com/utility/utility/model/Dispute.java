@@ -1,7 +1,9 @@
 package com.utility.utility.model;
+import com.utility.utility.enums.DisputeStatus;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "disputes")
@@ -13,9 +15,17 @@ public class Dispute {
     private String reason;
     private LocalDate submittedDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bill_id")
     private Bill bill;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "agent_id")
+    private CallCenterAgent assignedAgent;
+    
+    @Enumerated(EnumType.STRING)
+    private DisputeStatus status = DisputeStatus.OPEN;
+    
     public Long getId() {
         return id;
     }
@@ -46,5 +56,29 @@ public class Dispute {
 
     public void setBill(Bill bill) {
         this.bill = bill;
+    }
+    
+    public CallCenterAgent getAssignedAgent() {
+        return assignedAgent;
+    }
+
+    public void setAssignedAgent(CallCenterAgent assignedAgent) {
+        this.assignedAgent = assignedAgent;
+    }
+    
+    public DisputeStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DisputeStatus status) {
+        this.status = status;
+    }
+    
+    public void markAsResolved() {
+        this.status = DisputeStatus.RESOLVED;
+    }
+    
+    public boolean isResolved() {
+        return status == DisputeStatus.RESOLVED;
     }
 }

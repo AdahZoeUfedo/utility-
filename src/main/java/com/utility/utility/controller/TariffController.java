@@ -12,8 +12,13 @@ import java.util.List;
 @RequestMapping("/tariffs")
 public class TariffController {
 
-    @Autowired
-    private TariffService tariffService;
+	private final TariffService tariffService;
+
+	public TariffController(
+	        TariffService tariffService
+	) {
+	    this.tariffService = tariffService;
+	}
 
     @GetMapping
     public String viewTariffs(Model model) {

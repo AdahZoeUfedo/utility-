@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard - Utility International</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div class="navbar">
+    <a class="logo" th:href="@{/dashboard}">Utility International</a>
+    <nav>
+        <a th:href="@{/bills/customer/__${customer.id}__}">My Bills</a>
+        <a th:href="@{/tariffs}">View Tariffs</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
+
+<div class="container">
+    <h1>Welcome, <span th:text="${customer.name}"></span>!</h1>
+    <h2>What would you like to do today?</h2>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-card">
+            <h3>My Bills</h3>
+            <p>View and manage your utility bills</p>
+            <br/>
+            <a th:href="@{/bills/customer/__${customer.id}__}" class="btn">View Bills</a>
+        </div>
+        <div class="dashboard-card">
+            <h3>Tariffs</h3>
+            <p>Browse available utility tariffs</p>
+            <br/>
+            <a th:href="@{/tariffs}" class="btn">View Tariffs</a>
+        </div>
+        <div class="dashboard-card">
+            <h3>Logout</h3>
+            <p>Securely log out of your account</p>
+            <br/>
+            <a th:href="@{/logout}" class="btn btn-secondary">Logout</a>
+        </div>
+    </div>
+</div>
+<div class="footer">© 2026 Utility International. All rights reserved.</div>
+</body>
+</html>

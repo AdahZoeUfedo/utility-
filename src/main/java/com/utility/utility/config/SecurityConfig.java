@@ -4,6 +4,7 @@ import com.utility.utility.repository.CustomerRepository;
 import com.utility.utility.model.Customer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+@EnableMethodSecurity
 @Configuration
 public class SecurityConfig {
 
@@ -21,29 +23,35 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService(CustomerRepository customerRepository) {
-        return username -> {
-            Customer customer = customerRepository.findByEmail(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-            return User.builder()
-                    .username(customer.getEmail())
-                    .password(customer.getPassword())
-                    .roles("USER")
-                    .build();
-        };
-    }
+    
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register", "/css/**").permitAll()
-                        .anyRequest().authenticated()
+
+                        .requestMatchers(
+                                "/register",
+                                "/login",
+                                "/css/**"
+                        ).permitAll()
+
+                        .requestMatchers("/admin/**")
+                        .hasRole("ADMIN")
+
+                        .requestMatchers("/agent/**")
+                        .hasRole("AGENT")
+
+                        .requestMatchers("/customer/**")
+                        .hasRole("CUSTOMER")
+
+                        .anyRequest()
+                        .authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
+                        .usernameParameter("email")
                         .defaultSuccessUrl("/dashboard", true)
                         .permitAll()
                 )

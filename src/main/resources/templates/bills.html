@@ -43,13 +43,17 @@
                 <td th:text="${bill.amount}"></td>
                 <td th:text="${bill.dueDate}"></td>
                 <td>
-                        <span th:classappend="${bill.status == 'PAID'} ? 'badge-paid' : (${bill.status == 'DISPUTED'} ? 'badge-disputed' : 'badge-unpaid')"
-                              class="badge"
-                              th:text="${bill.status}">
+                        <span th:classappend="${bill.status.name() == 'PAID'} ? 'badge-paid' :
+					(${bill.status.name() == 'DISPUTED'} ? 'badge-disputed' : 'badge-unpaid')"
+                              th:text="${bill.status.name()}">
                         </span>
                 </td>
                 <td>
-                    <a th:href="@{/bills/pay/__${bill.id}__}" class="btn">Pay</a>
+					<a th:if="${bill.status.name() != 'PAID'}"
+					   th:href="@{/bills/pay/__${bill.id}__}"
+					   class="btn">
+					    Pay
+					</a>
                     <a th:href="@{/disputes/new/__${bill.id}__}" class="btn btn-secondary">Dispute</a>
                 </td>
             </tr>

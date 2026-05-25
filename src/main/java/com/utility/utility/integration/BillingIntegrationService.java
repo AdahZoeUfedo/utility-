@@ -1,5 +1,6 @@
 package com.utility.utility.integration;
 
+import com.utility.utility.enums.BillStatus;
 import com.utility.utility.model.Bill;
 import com.utility.utility.model.Customer;
 import com.utility.utility.repository.BillRepository;
@@ -28,7 +29,11 @@ public class BillingIntegrationService {
         if (!existingBills.isEmpty()) return;
 
         // Simulate 3 bills coming in from the external billing system
-        String[] statuses = {"UNPAID", "UNPAID", "PAID"};
+        BillStatus[] statuses = {
+        	    BillStatus.PENDING_PAYMENT,
+        	    BillStatus.PENDING_PAYMENT,
+        	    BillStatus.PAID
+        	};
         Double[] amounts = {85.50, 120.00, 95.75};
         LocalDate[] dueDates = {
                 LocalDate.now().plusDays(14),

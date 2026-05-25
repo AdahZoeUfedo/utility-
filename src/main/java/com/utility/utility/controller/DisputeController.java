@@ -10,8 +10,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/disputes")
 public class DisputeController {
 
-    @Autowired
-    private DisputeService disputeService;
+	private final DisputeService disputeService;
+
+	public DisputeController(
+	        DisputeService disputeService
+	) {
+	    this.disputeService = disputeService;
+	}
 
     @GetMapping("/new/{billId}")
     public String showDisputeForm(@PathVariable Long billId, Model model) {

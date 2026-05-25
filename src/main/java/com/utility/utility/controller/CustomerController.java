@@ -7,22 +7,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import com.utility.utility.dto.request.RegisterCustomerRequestDTO;
+import com.utility.utility.mapper.CustomerMapper;
+import jakarta.validation.Valid;
 @Controller
 public class CustomerController {
 
-    @Autowired
-    private CustomerService customerService;
+	private final CustomerService customerService;
+
+	public CustomerController(
+	        CustomerService customerService
+	) {
+	    this.customerService = customerService;
+	}
 
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
-        model.addAttribute("customer", new Customer());
+    	model.addAttribute(
+    	        "customer",
+    	        new RegisterCustomerRequestDTO(
+    	                "",
+    	                "",
+    	                ""
+    	        )
+    	);
         return "register";
     }
 
     @PostMapping("/register")
-    public String registerCustomer(@ModelAttribute Customer customer) {
+    public String registerCustomer(
+            @Valid @ModelAttribute RegisterCustomerRequestDTO requestDTO
+    ) {
+
+        Customer customer = CustomerMapper.toEntity(requestDTO);
+
         customerService.save(customer);
+
         return "redirect:/login";
     }
 

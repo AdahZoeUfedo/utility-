@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tariffs - Utility International</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div class="navbar">
+    <a class="logo" th:href="@{/dashboard}">Utility International</a>
+    <nav>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="card">
+        <h1>Available Tariffs</h1>
+        <h2>Browse our utility packages below</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Tariff Name</th>
+                <th>Rate Per Unit (£)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tariff : ${tariffs}">
+                <td th:text="${tariff.name}"></td>
+                <td th:text="${tariff.ratePerUnit}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(tariffs)}">
+                <td colspan="2" style="text-align:center; color:#6F4685;">No tariffs available.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="footer">© 2026 Utility International. All rights reserved.</div>
+</body>
+</html>

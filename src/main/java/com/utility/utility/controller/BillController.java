@@ -1,9 +1,12 @@
 package com.utility.utility.controller;
+import com.utility.utility.model.Customer;
 
+import com.utility.utility.dto.response.BillResponseDTO;
 import com.utility.utility.integration.BillingIntegrationService;
 import com.utility.utility.integration.PaymentIntegrationService;
 import com.utility.utility.model.Bill;
 import com.utility.utility.service.BillService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,21 +17,26 @@ import java.util.List;
 @RequestMapping("/bills")
 public class BillController {
 
-    @Autowired
-    private BillService billService;
+	private final BillService billService;
+	private final BillingIntegrationService billingIntegrationService;
+	private final PaymentIntegrationService paymentIntegrationService;
 
-    @Autowired
-    private BillingIntegrationService billingIntegrationService;
+	public BillController(
+	        BillService billService,
+	        BillingIntegrationService billingIntegrationService,
+	        PaymentIntegrationService paymentIntegrationService
+	) {
 
-    @Autowired
-    private PaymentIntegrationService paymentIntegrationService;
-
+	    this.billService = billService;
+	    this.billingIntegrationService = billingIntegrationService;
+	    this.paymentIntegrationService = paymentIntegrationService;
+	}
     @GetMapping("/customer/{customerId}")
     public String viewBills(@PathVariable Long customerId, Model model) {
         // Simulate fetching bills from external billing system
         billingIntegrationService.generateSimulatedBillsForCustomer(customerId);
 
-        List<Bill> bills = billService.getBillsByCustomerId(customerId);
+        List<BillResponseDTO> bills = billService.getBillDTOsByCustomerId(customerId);
         model.addAttribute("bills", bills);
         model.addAttribute("customerId", customerId);
         return "bills";
@@ -60,10 +68,15 @@ public class BillController {
             model.addAttribute("messageType", "error");
         }
 
-        List<Bill> bills = billService.getBillsByCustomerId(
-                billService.findById(billId).get().getCustomer().getId()
-        );
+        Bill bill = billService.getBillOrThrow(billId);
+
+        Long customerId = bill.getCustomer().getId();
+
+        List<BillResponseDTO> bills =
+                billService.getBillDTOsByCustomerId(customerId);
+
         model.addAttribute("bills", bills);
+
         return "bills";
     }
 }

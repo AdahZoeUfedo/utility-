@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Bills - Utility International</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div class="navbar">
+    <a class="logo" th:href="@{/dashboard}">Utility International</a>
+    <nav>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/tariffs}">View Tariffs</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="card">
+        <h1>My Bills</h1>
+        <h2>View, pay or dispute your utility bills</h2>
+
+        <!-- Payment result message -->
+        <div class="alert alert-success" th:if="${messageType == 'success'}">
+            <span th:text="${message}"></span>
+        </div>
+        <div class="alert alert-error" th:if="${messageType == 'error'}">
+            <span th:text="${message}"></span>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Bill ID</th>
+                <th>Amount (£)</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="bill : ${bills}">
+                <td th:text="${bill.id}"></td>
+                <td th:text="${bill.amount}"></td>
+                <td th:text="${bill.dueDate}"></td>
+                <td>
+                        <span th:classappend="${bill.status == 'PAID'} ? 'badge-paid' : (${bill.status == 'DISPUTED'} ? 'badge-disputed' : 'badge-unpaid')"
+                              class="badge"
+                              th:text="${bill.status}">
+                        </span>
+                </td>
+                <td>
+                    <a th:href="@{/bills/pay/__${bill.id}__}" class="btn">Pay</a>
+                    <a th:href="@{/disputes/new/__${bill.id}__}" class="btn btn-secondary">Dispute</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(bills)}">
+                <td colspan="5" style="text-align:center; color:#6F4685;">No bills found.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="footer">© 2026 Utility International. All rights reserved.</div>
+</body>
+</html>

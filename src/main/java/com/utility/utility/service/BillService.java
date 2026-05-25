@@ -1,43 +1,26 @@
 package com.utility.utility.service;
 
+import com.utility.utility.dto.response.BillResponseDTO;
 import com.utility.utility.model.Bill;
-import com.utility.utility.repository.BillRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.time.LocalDate;
+
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class BillService {
+public interface BillService {
 
-    @Autowired
-    private BillRepository billRepository;
+    List<Bill> getBillsByCustomerId(Long customerId);
 
-    public List<Bill> getBillsByCustomerId(Long customerId) {
-        return billRepository.findByCustomerId(customerId);
-    }
+    List<BillResponseDTO> getBillDTOsByCustomerId(Long customerId);
 
-    public Optional<Bill> findById(Long id) {
-        return billRepository.findById(id);
-    }
+    Optional<Bill> findById(Long id);
 
-    public Bill save(Bill bill) {
-        return billRepository.save(bill);
-    }
+    Bill save(Bill bill);
 
-    public boolean isWithin30Days(Bill bill) {
-        return bill.getDueDate().isAfter(LocalDate.now().minusDays(30));
-    }
+    boolean isWithin30Days(Bill bill);
 
+    void markAsDisputed(Bill bill);
 
-    public void markAsDisputed(Bill bill) {
-        bill.setStatus("DISPUTED");
-        billRepository.save(bill);
-    }
+    void markAsPaid(Bill bill);
 
-    public void markAsPaid(Bill bill) {
-       bill.setStatus("PAID");
-        billRepository.save(bill);
-    }
+    Bill getBillOrThrow(Long id);
 }

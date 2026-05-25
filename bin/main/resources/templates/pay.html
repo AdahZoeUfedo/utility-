@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pay Bill - Utility International</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div class="navbar">
+    <a class="logo" th:href="@{/dashboard}">Utility International</a>
+    <nav>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/logout}">Logout</a>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="card">
+        <h1>Pay Bill</h1>
+        <h2>Enter your payment details below</h2>
+
+        <div style="margin-bottom: 20px; padding: 16px; background-color: #f8f0ff; border-radius: 8px;">
+            <p><strong>Bill Amount:</strong> £<span th:text="${bill.amount}"></span></p>
+            <p style="margin-top: 8px;"><strong>Due Date:</strong> <span th:text="${bill.dueDate}"></span></p>
+        </div>
+
+        <form th:action="@{/bills/pay/__${bill.id}__}" method="post">
+            <div class="form-group">
+                <label>Card Number:</label>
+                <input type="text" name="cardNumber" placeholder="1234 5678 9012 3456" required/>
+            </div>
+            <div class="form-group">
+                <label>Expiry Date:</label>
+                <input type="text" name="expiryDate" placeholder="MM/YY" required/>
+            </div>
+            <div class="form-group">
+                <label>CVV:</label>
+                <input type="text" name="cvv" placeholder="123" required/>
+            </div>
+            <button type="submit" class="btn">Confirm Payment</button>
+            <a th:href="@{/dashboard}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+<div class="footer">© 2026 Utility International. All rights reserved.</div>
+</body>
+</html>
