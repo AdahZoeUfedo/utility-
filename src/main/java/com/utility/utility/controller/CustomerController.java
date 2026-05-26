@@ -34,6 +34,7 @@ public class CustomerController {
         return "register";
     }
 
+    // Handles customer registration form submission
     @PostMapping("/register")
     public String registerCustomer(
             @Valid @ModelAttribute RegisterCustomerRequestDTO requestDTO
