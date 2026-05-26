@@ -53,6 +53,7 @@ public class CustomerController {
 
     @GetMapping("/dashboard")
     public String showDashboard(Model model, Principal principal) {
+        // Retrieve currently logged-in user's email
         String email = principal.getName();
         customerService.findByEmail(email).ifPresent(customer ->
                 model.addAttribute("customer", customer)
