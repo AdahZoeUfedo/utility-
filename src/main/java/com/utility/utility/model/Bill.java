@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+// The bills table
 @Entity
 @Table(name = "bills")
 public class Bill {
